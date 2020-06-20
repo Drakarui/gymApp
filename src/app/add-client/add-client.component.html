@@ -1,0 +1,78 @@
+<ngx-spinner bdColor = "rgba(228,235,238,0.8)" size = "medium" color = "#d4d5e1" type = "ball-zig-zag" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+    
+<div class="container">
+    <h2 class="mt-3">Add a user</h2>
+    <form [formGroup]="clientForm" class="mt-4">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputEmail">Email</label>
+                <input type="email" class="form-control" formControlName="email">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="inputIdentification">Identification</label>
+                <input type="text" class="form-control" formControlName="document">
+            </div>
+        </div>
+        <div *ngIf="clientForm.controls['email'].invalid && clientForm.controls['email'].dirty"
+            class="alert alert-warning" role="alert">
+            <span *ngIf="clientForm.controls['email'].errors.required">Email is required</span>
+            <span *ngIf="clientForm.controls['email'].errors.email">Verify if this is a correct email address</span>
+        </div>
+        <div *ngIf="clientForm.controls['document'].invalid && clientForm.controls['document'].dirty"
+            class="alert alert-warning" role="alert">
+            <span *ngIf="clientForm.controls['document'].errors.required">Document id is required</span>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputName">Name</label>
+                <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputLast">Last Name</label>
+                <input type="text" class="form-control" formControlName="lastName">
+            </div>
+        </div>
+        <div *ngIf="clientForm.controls['name'].invalid && clientForm.controls['name'].dirty"
+            class="alert alert-warning" role="alert">
+            <span *ngIf="clientForm.controls['name'].errors.required">The name of the client is necessary</span>
+        </div>
+        <div *ngIf="clientForm.controls['lastName'].invalid && clientForm.controls['lastName'].dirty"
+            class="alert alert-warning" role="alert">
+            <span *ngIf="clientForm.controls['lastName'].errors.required">Last Name is important too</span>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputPhone">Phone Number</label>
+                <input type="text" class="form-control" formControlName="phone">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="dateModel" ngbDatepicker
+                        #d="ngbDatepicker" formControlName="birth" id="bithDate">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ml-3" *ngIf="!editInProgress">
+                <input (change)="uploadPhoto($event)"type="file" class="form-control-file" formControlName="photo">
+            </div>
+
+        </div>
+        <div *ngIf="clientForm.controls['birth'].invalid && clientForm.controls['birth'].dirty"
+            class="alert alert-warning" role="alert">
+            <span *ngIf="clientForm.controls['birth'].errors.required">Client's birth is necessary</span>
+        </div>
+        <div class="mb-2" *ngIf="!editInProgress">
+            <progressbar [animate]="true" [value]="percent" type="success"><b>{{percent}}%</b></progressbar>
+            <small><em>Image Upload Progress</em></small>
+        </div>
+
+        <button [disabled]="!clientForm.valid" *ngIf="!editInProgress"(click)="addClient()" class="btn btn-primary">Add</button>
+        <button [disabled]="!clientForm.valid" (click)="edit()" *ngIf="editInProgress"  class="btn btn-warning ">Edit</button>
+      
+    </form>
+</div>

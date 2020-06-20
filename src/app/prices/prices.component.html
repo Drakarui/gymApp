@@ -1,0 +1,55 @@
+<div class="container">
+    <ngx-spinner bdColor="rgba(228,235,238,0.8)" size="medium" color="#d4d5e1" type="ball-zig-zag" [fullScreen]="true">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+    <div class="row mt-3">
+
+        <div class="col-md" style="overflow-y: scroll;max-height: 900px;">
+            <div *ngFor="let plan of priceList" class="row-md mt-1" >
+                <div class="card text-white bg-secondary mb-3">
+                    <div class="card-header">{{plan.name}}</div>
+                    <div class="card-body">
+                        <h6 class="small">{{plan.idPlan}}</h6>
+                        <h5 class="card-title">{{plan.price | currency: "Cop. $"}}</h5>
+                        <p class="card-text">Quantity: {{plan.quantity}}--->For: {{plan.period}}</p>
+                        <button (click)="toEditPlan(plan)" [disabled]="edit" class="btn btn-warning">Edit</button>
+                        <button (click)="deletePlan(plan)" class="btn btn-danger ml-2">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4" style="overflow: hidden;">
+            <h2>Add or Edit Plan</h2>
+            <form [formGroup]="priceForm">
+                <div class="form-group">
+                    <label for="nameInput">Name</label>
+                    <input type="text" class="form-control" id="nameInput" placeholder="Insert plan's name"
+                        formControlName="name">
+                </div>
+                <div class="form-group">
+                    <label for="priceInput">Price</label>
+                    <input type="text" class="form-control" id="priceIntput" placeholder="Insert plan's price"
+                        formControlName="price">
+                </div>
+                <div class="form-group">
+                    <label for="quantityInput">Quantity</label>
+                    <input type="text" class="form-control" id="quantityInput" placeholder="Insert plan's term"
+                        formControlName="quantity">
+                </div>
+                <div class="form-group">
+                    <label for="termInput">Term</label>
+                    <select id="termInput" class="form-control" formControlName="period">
+                        <option selected>Choose...</option>
+                        <option value="Day">Day</option>
+                        <option value="Week">Week</option>
+                        <option value="Month">Month</option>
+                        <option value="Year">Year</option>
+                    </select>
+                </div>
+            </form>
+            <button (click)="addPlan()" *ngIf="!edit" [disabled]="!priceForm.valid" class="btn btn-primary">Add</button>
+            <button [disabled]="!priceForm.valid" (click)="editPlan()" *ngIf="edit" class="btn btn-warning">Edit</button>
+        </div>
+
+    </div>

@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <form>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Buscar Cliente</label>
+            <input type="text" (input)="searchClient($event.target.value)"class="form-control" id="clientIdInput" placeholder="Digite el documento del cliente...">
+        </div>
+    </form>
+
+
+    <div class="container">
+        <ngx-spinner bdColor="rgba(228,235,238,0.8)" size="medium" color="#d4d5e1" type="ball-zig-zag"
+            [fullScreen]="true">
+            <p style="color: white"> Loading... </p>
+        </ngx-spinner>
+        <div class="row">
+            <div *ngFor="let client of clients" class="col-sm-3">
+                <div class="card">
+
+
+                    <img class="card-img-top imgClient" [src]="client.photoFetch|async">
+                    <div class="card-body">
+                        <h5 class="card-title">{{client.name}} {{client.lastName}}</h5>
+                        <p class="card-text">Identification: {{client.identification}}</p>
+                        <p class="card-text">Email: {{client.email}}</p>
+                        <p class="card-text">Phone: {{client.phone}}</p>
+                        <a [routerLink]='["/addClient/", client.id]'class="card-link text-primary">Edit</a>
+                        <a href="#" class="card-link text-danger">Disable</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>

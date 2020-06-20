@@ -1,0 +1,25 @@
+<div class="container mt-3">
+    <ngx-spinner bdColor="rgba(228,235,238,0.8)" size="medium" color="#d4d5e1" type="ball-zig-zag" [fullScreen]="true">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+    <div class="container" *ngIf="!isLoading">
+        <div class="row mt-3" *ngFor="let sub of subs, let i=index">
+            <div class="col-md">
+
+                <div class="card">
+                    <div class="card-header">
+                        {{sub.clientName}} 
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{sub.planName}}</h5>
+                        <p class="card-text"> Cost: {{sub.planPrice|currency:"Cop. $"}}</p>
+                        <p class="card-text"> From: {{sub.initDate | date:"dd/MM/yyyy" }}</p>
+                        <p class="card-text"> To: {{sub.finalDate | date:"dd/MM/yyyy" }}</p>
+                        <a (click)="deleteSub(sub.idSubscription, i)" class="btn btn-danger">Decline Subscription</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

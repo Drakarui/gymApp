@@ -1,0 +1,115 @@
+<ngx-spinner bdColor="rgba(228,235,238,0.8)" size="medium" color="#d4d5e1" type="ball-zig-zag" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-7" style="overflow-y:scroll;max-height: 900px;">
+            <h3>Subscription Form</h3>
+            <div class="form-group">
+                <label for="clientIdentificationInput">Search client by identification</label>
+                <input (input)="clientFilter($event.target.value)"type="text" class="form-control" [value]="clientIdentification" id="clientIdentificationInput">
+            </div>
+            <div class="row" style="overflow-x:scroll ;">
+                <div *ngFor="let client of clients" class="col-md">
+                    <div class="card" style="width: 300px;height: 200px;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{client.name}} {{client.lastName}}</h5>
+                            <p class="card-text">Identification: {{client.identification}}</p>
+                            <a (click)="selectClient(client)"class="card-link text-primary">Select</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="planInput">Search plan for client</label>
+                <input (input)="planFilter($event.target.value)" type="text" class="form-control" [value]="planName"id="planInput">
+            </div>
+            <div class="row" style="overflow-x:scroll ;">
+                <div *ngFor="let plan of plans" class="col">
+                    <div class="card " style="width: 300px;height: 200px;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{plan.name}}</h5>
+                            <p class="card-text">Price: {{plan.price}}</p>
+                            <p class="card-text">Term: {{plan.period}} for {{plan.quantity}} times</p>
+            
+                            <a (click)="selectPlan(plan)"class="card-link text-primary">Select</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="datepickerFrom">From: </label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="dateModelFrom" ngbDatepicker
+                        #d="ngbDatepicker" (ngModelChange)="calculateDate()">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="datepickerTo">To: </label>
+                <div class="input-group">
+                    <input class="form-control" [disabled]="true" placeholder="yyyy-mm-dd" name="dp"
+                        [(ngModel)]="dateModelTo" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" [disabled]="true" (click)="d.toggle()"
+                            type="button"></button>
+                    </div>
+                </div>
+            </div>
+           
+             
+                
+              
+  
+       
+
+        </div>
+        <div class="col-md-3">
+            <h3>Detail</h3>
+            
+            <div class="row">
+                 
+                <div *ngIf="selectedClient!=null"class="col-md">
+                        <h4>Client</h4>
+                    <div class="card" >
+                        <div class="card-body">
+                            <h5 class="card-title">{{selectedClient.name}} {{selectedClient.lastName}}</h5>
+                            <p class="card-text">Identification: {{selectedClient.identification}}</p>
+                            <a (click)="dismissClient()" class="card-link text-warning">Dismiss</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+           
+            <div class="row">
+                 
+                <div *ngIf="selectedPlan!=null" class="col">
+                        <h4>Plan</h4>   
+                    <div class="card " >
+                        <div class="card-body">
+                            <h5 class="card-title">{{selectedPlan.name}}</h5>
+                            <p class="card-text">Price: {{selectedPlan.price}}</p>
+                            <p class="card-text">Term: {{selectedPlan.period}} for {{selectedPlan.quantity}} times</p>
+                         
+    
+                            <a (click)="dismissPlan()"class="card-link text-warning">Dismiss</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row mt-1">
+                    <div *ngIf="selectedPlan!=null" class="col">
+                    <h5>Total: {{selectedPlan.price|currency:"Cop. $"}}</h5>
+                    </div>
+            </div>
+  
+            <button (click)="addSubscription()"class="btn btn-primary">Subscribe</button>
+        </div>
+    </div>
+</div>

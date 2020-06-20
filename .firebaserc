@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "gymapp-33ef5": {
+      "hosting": {
+        "gymApp": [
+          "gymapp-33ef5"
+        ]
+      }
+    }
+  }
+}
